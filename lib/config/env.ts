@@ -28,6 +28,7 @@ const schema = z.object({
   OPENAI_FORUM_MODEL: z.preprocess((v) => v === "" ? undefined : v, z.string().optional()),
   FORUM_CRON_SECRET: z.preprocess((v) => v === "" ? undefined : v, z.string().optional()),
   CRON_SECRET: z.preprocess((v) => v === "" ? undefined : v, z.string().optional()),
+  API_SECRET_KEY: z.preprocess((v) => v === "" ? undefined : v, z.string().optional()),
 });
 
 export const env = schema.parse({
@@ -58,4 +59,5 @@ export const env = schema.parse({
   OPENAI_FORUM_MODEL: process.env.OPENAI_FORUM_MODEL,
   FORUM_CRON_SECRET: process.env.FORUM_CRON_SECRET,
   CRON_SECRET: process.env.CRON_SECRET,
+  API_SECRET_KEY: process.env.API_SECRET_KEY,
 });

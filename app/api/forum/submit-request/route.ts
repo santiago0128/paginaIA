@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 /**
  * ⚠️ ENDPOINT DESHABILITADO
@@ -11,7 +11,7 @@ import { NextRequest, NextResponse } from "next/server";
  * Para uso interno, usa /api/forum/generate con autenticación.
  */
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   return NextResponse.json(
     {
       ok: false,
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
   );
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   return NextResponse.json(
     {
       ok: false,

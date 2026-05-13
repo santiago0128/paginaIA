@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { env } from "@/lib/config/env";
 import { generateForumPostFromNews } from "@/lib/openai/forum";
-import { getLatestNews } from "@/lib/news/rss";
+import { getDailyNews } from "@/lib/news/rss";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 export const dynamic = "force-dynamic";
@@ -120,7 +120,7 @@ async function handleRequest(request: NextRequest) {
       generatedPost = await generateWithCustomPrompt(INTERNAL_PROMPTS[promptType]);
     } else {
       // Default: generar desde noticias
-      const news = await getLatestNews();
+      const news = await getDailyNews(36);
       if (news.length === 0) {
         return NextResponse.json(
           { ok: false, error: "No hay noticias disponibles para generar el post." },

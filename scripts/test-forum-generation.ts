@@ -6,14 +6,14 @@
  */
 
 import { generateForumPostFromNews } from "@/lib/openai/forum";
-import { getLatestNews } from "@/lib/news/rss";
+import { getDailyNews } from "@/lib/news/rss";
 
 async function main() {
   console.log("🧪 Probando generación de posts del foro...\n");
 
   try {
     console.log("📰 Obteniendo noticias del día...");
-    const news = await getLatestNews();
+    const news = await getDailyNews();
     console.log(`✓ ${news.length} noticias obtenidas\n`);
 
     if (news.length === 0) {

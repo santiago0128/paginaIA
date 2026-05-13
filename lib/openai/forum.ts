@@ -22,41 +22,7 @@ export type GeneratedForumPost = {
   sourceUrls: string[];
 };
 
-const responseFormatSchema = {
-  type: "object",
-  additionalProperties: false,
-  required: ["title", "excerpt", "content", "topic", "source_titles", "source_urls"],
-  properties: {
-    title: { type: "string" },
-    excerpt: { type: "string" },
-    content: { type: "string" },
-    topic: { type: "string", enum: ["ia", "tecnologia", "startups"] },
-    source_titles: { type: "array", items: { type: "string" } },
-    source_urls: { type: "array", items: { type: "string" } },
-  },
-};
-
-function collectOutputText(value: unknown): string {
-  if (!value) return "";
-  if (Array.isArray(value)) return value.map(collectOutputText).filter(Boolean).join("\n");
-  if (typeof value !== "object") return "";
-
-  const record = value as Record<string, unknown>;
-  if (record.type === "output_text" && typeof record.text === "string") {
-    return record.text;
-  }
-
-  if (record.content) return collectOutputText(record.content);
-  if (record.output) return collectOutputText(record.output);
-
-  return "";
-}
-
-function extractOutputText(response: unknown): string {
-  const record = response as { output_text?: unknown; output?: unknown };
-  if (typeof record.output_text === "string") return record.output_text;
-  return collectOutputText(record.output);
-}
+// Response validation and helper extraction removed: not used in current flow.
 
 function trimNewsItem(item: NewsItem) {
   return {
