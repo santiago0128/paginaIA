@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import Script from "next/script";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -17,6 +18,10 @@ const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
 });
+
+const googleTagId = env.NEXT_PUBLIC_GTAG_ID?.trim() ?? env.NEXT_PUBLIC_GA_ID?.trim() ?? "GT-NF7FBTG9";
+const googleAnalyticsMeasurementId =
+  env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim() ?? env.NEXT_PUBLIC_GA_ID?.trim() ?? "G-DH48DHR7L6";
 
 export const metadata: Metadata = {
   metadataBase: new URL(brand.siteUrl),
@@ -54,11 +59,28 @@ export default function RootLayout({
             strategy="afterInteractive"
           />
         )}
+        {(googleTagId || googleAnalyticsMeasurementId) && (
+          <>
+            <Script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${googleTagId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){window.dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${googleTagId}');
+gtag('config', '${googleAnalyticsMeasurementId}');`}
+            </Script>
+          </>
+        )}
         <div className="flex min-h-screen flex-col">
           <SiteHeader />
           <main className="flex-1">{children}</main>
           <SiteFooter />
         </div>
+        <Analytics />
       </body>
     </html>
   );
