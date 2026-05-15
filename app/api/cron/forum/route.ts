@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { createDailyForumPost } from "@/lib/forum/posts";
 
 export const dynamic = "force-dynamic";
@@ -20,10 +20,10 @@ async function handleRequest(){
   }
 }
 
-export async function GET(request: NextRequest) {
-  return handleRequest(request);
+export async function GET() {
+  return handleRequest();
 }
 
-export async function POST(request: NextRequest) {
-  return handleRequest(request);
+export async function POST() {
+  return handleRequest();
 }
