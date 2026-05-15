@@ -35,23 +35,25 @@ function trimNewsItem(item: NewsItem) {
   };
 }
 
-const TOPIC_ALIASES: Record<string, string> = {
-  "tecnología": "tecnologia",
-  "technology": "tecnologia",
-  "tech": "tecnologia",
-  "artificial intelligence": "ia",
-  "inteligencia artificial": "ia",
-  "ai": "ia",
-  "startup": "startups",
-};
+function stripAccents(s: string): string {
+  return s.normalize("NFD").replace(/\p{Mn}/gu, "");
+}
+
+function normalizeTopic(raw: string): string {
+  const s = stripAccents(raw.toLowerCase().trim());
+  if (s === "ia" || s.includes("inteligencia") || s.includes("artificial") || s === "ai") return "ia";
+  if (s === "startups" || s === "startup" || s.includes("venture") || s.includes("emprendimiento")) return "startups";
+  if (s === "tecnologia" || s === "tecnología" || s.includes("tecnolog") || s.includes("tech")) return "tecnologia";
+  return s;
+}
 
 function normalizeLlmOutput(raw: Record<string, unknown>): Record<string, unknown> {
-  const topic = typeof raw.topic === "string"
-    ? (TOPIC_ALIASES[raw.topic.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")] ?? raw.topic.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""))
-    : raw.topic;
+  const topic = typeof raw.topic === "string" ? normalizeTopic(raw.topic) : raw.topic;
+  const title = typeof raw.title === "string" ? raw.title.slice(0, 110) : raw.title;
 
   return {
     ...raw,
+    title,
     topic,
     source_titles: Array.isArray(raw.source_titles) ? raw.source_titles.slice(0, 6) : raw.source_titles,
     source_urls: Array.isArray(raw.source_urls) ? raw.source_urls.slice(0, 6) : raw.source_urls,
