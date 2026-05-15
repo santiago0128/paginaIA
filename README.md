@@ -34,3 +34,7 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Environment Variables
+
+Set `NEXT_PUBLIC_GTAG_ID=GT-NF7FBTG9` and `NEXT_PUBLIC_GA_MEASUREMENT_ID=G-DH48DHR7L6` to enable Google analytics. `NEXT_PUBLIC_GA_ID` is still supported as a fallback. Vercel Analytics is loaded automatically in production once the app is deployed on Vercel.
