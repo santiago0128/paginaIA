@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 
 
-async function handleRequest(request: NextRequest) {
+async function handleRequest(){
   
 
   try {
