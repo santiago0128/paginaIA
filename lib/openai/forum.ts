@@ -35,6 +35,29 @@ function trimNewsItem(item: NewsItem) {
   };
 }
 
+const TOPIC_ALIASES: Record<string, string> = {
+  "tecnología": "tecnologia",
+  "technology": "tecnologia",
+  "tech": "tecnologia",
+  "artificial intelligence": "ia",
+  "inteligencia artificial": "ia",
+  "ai": "ia",
+  "startup": "startups",
+};
+
+function normalizeLlmOutput(raw: Record<string, unknown>): Record<string, unknown> {
+  const topic = typeof raw.topic === "string"
+    ? (TOPIC_ALIASES[raw.topic.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")] ?? raw.topic.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""))
+    : raw.topic;
+
+  return {
+    ...raw,
+    topic,
+    source_titles: Array.isArray(raw.source_titles) ? raw.source_titles.slice(0, 6) : raw.source_titles,
+    source_urls: Array.isArray(raw.source_urls) ? raw.source_urls.slice(0, 6) : raw.source_urls,
+  };
+}
+
 function normalizeSources(parsed: z.infer<typeof generatedForumPostSchema>, news: NewsItem[]) {
   const sourceByUrl = new Map(news.map((item) => [item.url, item]));
   const sourceUrls = parsed.source_urls.filter((url) => sourceByUrl.has(url));
@@ -116,7 +139,8 @@ Devuelve la respuesta en este formato JSON exacto:
   const outputText =
     (payload as { choices?: Array<{ message?: { content?: string } }> } | null)?.choices?.[0]?.message?.content ?? "";
   const parsedJson = JSON.parse(outputText);
-  const parsed = generatedForumPostSchema.parse(parsedJson);
+  const normalized = normalizeLlmOutput(parsedJson);
+  const parsed = generatedForumPostSchema.parse(normalized);
   const { sourceTitles, sourceUrls } = normalizeSources(parsed, news);
 
   return {
