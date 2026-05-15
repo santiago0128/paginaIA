@@ -101,7 +101,7 @@ Devuelve la respuesta en este formato JSON exacto:
       response_format: {
         type: "json_object",
       },
-      max_tokens: 2200,
+      max_tokens: 5000,
       temperature: 0.7,
     }),
   });
