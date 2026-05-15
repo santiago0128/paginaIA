@@ -139,7 +139,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-semibold text-white">10. Disponibilidad del sitio</h2>
           <p className="mt-3 leading-7">
-            {brand.name} se proporciona "tal como está" sin garantías de:
+            {brand.name} se proporciona &ldquo;tal como está&rdquo; sin garantías de:
           </p>
           <ul className="mt-2 list-disc space-y-1 pl-5 leading-7">
             <li>Disponibilidad permanente o sin interrupciones.</li>

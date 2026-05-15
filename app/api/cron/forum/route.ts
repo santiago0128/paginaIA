@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { env } from "@/lib/config/env";
 import { createDailyForumPost } from "@/lib/forum/posts";
 
 export const dynamic = "force-dynamic";

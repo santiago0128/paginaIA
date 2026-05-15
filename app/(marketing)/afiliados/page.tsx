@@ -51,9 +51,9 @@ export default function AffiliateDisclosurePage() {
             Intentamos ser transparentes sobre afiliaciones:
           </p>
           <ul className="mt-3 list-disc space-y-2 pl-5 leading-7">
-            <li><strong>Etiqueta explícita:</strong> Muchos enlaces tendrán una etiqueta visual o texto que indique "enlace de afiliado" o similar.</li>
-            <li><strong>URL con parámetros:</strong> URLs de afiliado pueden contener códigos de seguimiento (ej: "?ref=noxis").</li>
-            <li><strong>Botones de CTA destacados:</strong> Botones grandes "Ir a la herramienta" o "Comprar ahora" suelen ser afiliados.</li>
+            <li><strong>Etiqueta explícita:</strong> Muchos enlaces tendrán una etiqueta visual o texto que indique &ldquo;enlace de afiliado&rdquo; o similar.</li>
+            <li><strong>URL con parámetros:</strong> URLs de afiliado pueden contener códigos de seguimiento (ej: &ldquo;?ref=noxis&rdquo;).</li>
+            <li><strong>Botones de CTA destacados:</strong> Botones grandes &ldquo;Ir a la herramienta&rdquo; o &ldquo;Comprar ahora&rdquo; suelen ser afiliados.</li>
             <li><strong>Sección de divulgación:</strong> Cada página de herramienta o comparativa puede indicar si hay afiliación.</li>
           </ul>
           <p className="mt-3 leading-7">
@@ -67,7 +67,7 @@ export default function AffiliateDisclosurePage() {
             Los precios, planes, descuentos, características y programas de afiliados de proveedores <strong>cambian frecuentemente</strong> sin notificarnos:
           </p>
           <ul className="mt-3 list-disc space-y-2 pl-5 leading-7">
-            <li>Una herramienta puede cambiar de "gratis" a "de pago".</li>
+            <li>Una herramienta puede cambiar de &ldquo;gratis&rdquo; a &ldquo;de pago&rdquo;.</li>
             <li>Los precios pueden aumentar o disminuir entre actualizaciones.</li>
             <li>Las funciones pueden ser removidas o mejoradas.</li>
             <li>Un programa de afiliado puede terminar.</li>
@@ -86,7 +86,7 @@ export default function AffiliateDisclosurePage() {
           <ul className="mt-3 list-disc space-y-2 pl-5 leading-7">
             <li><strong>Ubicación:</strong> Ads pueden aparecer en sidebar, entre artículos o en el footer.</li>
             <li><strong>Relevancia:</strong> Los anuncios se basan en categorías de contenido, no datos personales (según RGPD).</li>
-            <li><strong>Identificación:</strong> Los anuncios estarán claramente marcados como "Publicidad" o "Anuncio patrocinado".</li>
+            <li><strong>Identificación:</strong> Los anuncios estarán claramente marcados como &ldquo;Publicidad&rdquo; o &ldquo;Anuncio patrocinado&rdquo;.</li>
             <li><strong>Control:</strong> Puedes bloquear o reportar anuncios inapropiados.</li>
           </ul>
           <p className="mt-3 leading-7">Los anuncios NO afectan nuestras recomendaciones o contenido editorial.</p>
@@ -151,7 +151,6 @@ export default function AffiliateDisclosurePage() {
           <p className="mt-3 leading-7">
             Escribe a {brand.partnershipsEmail}
           </p>
-        </section>
         </section>
       </div>
     </article>
