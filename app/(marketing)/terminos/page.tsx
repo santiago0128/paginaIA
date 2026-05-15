@@ -171,8 +171,4 @@ export default function TermsPage() {
     </article>
   );
 }
-        </section>
-      </div>
-    </article>
-  );
-}
+        
