@@ -6,8 +6,6 @@ export const dynamic = "force-dynamic";
 
 
 async function handleRequest(){
-  
-
   try {
     const post = await createDailyForumPost();
     return NextResponse.json({ ok: true, post });
