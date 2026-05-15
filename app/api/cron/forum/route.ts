@@ -5,7 +5,7 @@ import { createDailyForumPost } from "@/lib/forum/posts";
 export const dynamic = "force-dynamic";
 
 function isAuthorized(request: NextRequest): boolean {
-  const secret = env.FORUM_CRON_SECRET ?? env.CRON_SECRET;
+  const secret = process.env.CRON_SECRET
 
   if (!secret) {
     return process.env.NODE_ENV !== "production";
@@ -13,9 +13,8 @@ function isAuthorized(request: NextRequest): boolean {
 
   const header = request.headers.get("authorization") ?? "";
   const bearer = header.replace(/^Bearer\s+/i, "");
-  const querySecret = request.nextUrl.searchParams.get("secret");
 
-  return bearer === secret || querySecret === secret;
+  return bearer === secret;
 }
 
 async function handleRequest(request: NextRequest) {
