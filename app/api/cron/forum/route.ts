@@ -17,12 +17,12 @@ function isAuthorized(request: NextRequest): boolean {
 }
 
 async function handleRequest(request: NextRequest) {
-  if (!isAuthorized(request)) {
-    return NextResponse.json(
-      { ok: false, error: "No autorizado." },
-      { status: 401 }
-    );
-  }
+  // if (!isAuthorized(request)) {
+  //   return NextResponse.json(
+  //     { ok: false, error: "No autorizado." },
+  //     { status: 401 }
+  //   );
+  // }
 
   try {
     const post = await createDailyForumPost();
