@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     template: brand.seo.titleTemplate,
   },
   description: brand.seo.defaultDescription,
+  keywords: [...brand.seo.keywords],
   alternates: {
     canonical: "/",
   },
@@ -40,6 +41,13 @@ export const metadata: Metadata = {
     siteName: brand.name,
     locale: brand.locale,
     type: "website",
+    images: [{ url: brand.seo.ogImage, width: 1200, height: 630, alt: brand.seo.defaultTitle }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: brand.seo.defaultTitle,
+    description: brand.seo.defaultDescription,
+    images: [brand.seo.ogImage],
   },
 };
 

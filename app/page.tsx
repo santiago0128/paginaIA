@@ -1,11 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Search } from "lucide-react";
-import { brand } from "@/lib/config/brand";
+import { brand, buildUrl } from "@/lib/config/brand";
 import { getFeaturedTools, getPopularComparisons } from "@/lib/supabase/db";
 import { ToolCard } from "@/components/tools/ToolCard";
 import { NewsletterForm } from "@/components/marketing/NewsletterForm";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  alternates: { canonical: buildUrl("/") },
+  openGraph: {
+    url: buildUrl("/"),
+    type: "website",
+  },
+};
 
 export default async function Home() {
   const [tools, comparisons] = await Promise.all([
@@ -13,8 +22,25 @@ export default async function Home() {
     getPopularComparisons(),
   ]);
 
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: brand.name,
+    url: brand.siteUrl,
+    description: brand.seo.defaultDescription,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: { "@type": "EntryPoint", urlTemplate: `${brand.siteUrl}/herramientas?q={search_term_string}` },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+      />
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(56,189,248,0.15),transparent_35%),linear-gradient(180deg,#08111f_0%,#030712_100%)]" />

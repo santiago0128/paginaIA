@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { buildUrl } from "@/lib/config/brand";
+import { brand, buildUrl } from "@/lib/config/brand";
 import { getBlogPostBySlug } from "@/lib/supabase/db";
 import { buildBlogPostSchema } from "@/lib/seo/schema-org";
-import { brand } from "@/lib/config/brand";
 import { env } from "@/lib/config/env";
 import { AdSlot } from "@/components/monetization/AdSlot";
 
@@ -16,15 +15,27 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getBlogPostBySlug(params.slug);
   if (!post) return { title: "Post no encontrado" };
+  const title = post.seo_title ?? post.title;
+  const description = post.seo_description ?? post.excerpt ?? undefined;
+  const ogImage = { url: brand.seo.ogImage, width: 1200, height: 630, alt: title };
   return {
-    title: post.seo_title ?? post.title,
-    description: post.seo_description ?? post.excerpt ?? undefined,
+    title,
+    description,
     alternates: { canonical: buildUrl(`/blog/${post.slug}`) },
     openGraph: {
-      title: post.seo_title ?? post.title,
-      description: post.seo_description ?? post.excerpt ?? undefined,
+      title,
+      description,
+      url: buildUrl(`/blog/${post.slug}`),
+      siteName: brand.name,
       type: "article",
       publishedTime: post.published_at ?? undefined,
+      images: [ogImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [brand.seo.ogImage],
     },
   };
 }

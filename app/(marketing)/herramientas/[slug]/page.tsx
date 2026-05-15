@@ -28,13 +28,26 @@ type Props = { params: { slug: string } };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const tool = await getToolBySlug(params.slug);
   if (!tool) return { title: "Herramienta no encontrada" };
+  const title = tool.seo_title ?? `${tool.name}: precio, usos, ventajas y alternativas`;
+  const description = tool.seo_description ?? tool.short_description ?? undefined;
+  const ogImage = { url: brand.seo.ogImage, width: 1200, height: 630, alt: title };
   return {
-    title: tool.seo_title ?? `${tool.name}: precio, usos, ventajas y alternativas`,
-    description: tool.seo_description ?? tool.short_description ?? undefined,
+    title,
+    description,
     alternates: { canonical: buildUrl(`/herramientas/${tool.slug}`) },
     openGraph: {
       title: tool.seo_title ?? tool.name,
-      description: tool.seo_description ?? tool.short_description ?? undefined,
+      description,
+      url: buildUrl(`/herramientas/${tool.slug}`),
+      siteName: brand.name,
+      type: "website",
+      images: [ogImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [brand.seo.ogImage],
     },
   };
 }

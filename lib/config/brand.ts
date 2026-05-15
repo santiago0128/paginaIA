@@ -29,7 +29,7 @@ export const brand = {
       "Midjourney vs DALL-E",
       "herramientas IA en español",
     ],
-    ogImage: "/og/default.png",
+    ogImage: "/og/default",
     twitterCard: "summary_large_image",
   },
   legal: {

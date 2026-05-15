@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Bot, ExternalLink, Newspaper, ShieldCheck } from "lucide-react";
-import { buildUrl } from "@/lib/config/brand";
+import { brand, buildUrl } from "@/lib/config/brand";
 import { env } from "@/lib/config/env";
 import { getForumPostBySlug } from "@/lib/supabase/db";
 import { AdSlot } from "@/components/monetization/AdSlot";
@@ -15,6 +15,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getForumPostBySlug(params.slug);
   if (!post) return { title: "Publicación no encontrada" };
 
+  const ogImage = { url: brand.seo.ogImage, width: 1200, height: 630, alt: post.title };
+
   return {
     title: post.title,
     description: post.excerpt ?? undefined,
@@ -22,8 +24,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: post.title,
       description: post.excerpt ?? undefined,
+      url: buildUrl(`/foro/${post.slug}`),
+      siteName: brand.name,
       type: "article",
       publishedTime: post.published_at ?? undefined,
+      images: [ogImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt ?? undefined,
+      images: [brand.seo.ogImage],
     },
   };
 }
@@ -82,8 +93,23 @@ export default async function ForumPostPage({ params }: Props) {
   const sourceUrls = post.source_urls ?? [];
   const sourceTitles = post.source_titles ?? [];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: post.title,
+    description: post.excerpt ?? undefined,
+    url: buildUrl(`/foro/${post.slug}`),
+    datePublished: post.published_at ?? undefined,
+    author: { "@type": "Organization", name: brand.name, url: brand.siteUrl },
+    publisher: { "@type": "Organization", name: brand.name, url: brand.siteUrl },
+  };
+
   return (
     <article className="mx-auto w-full max-w-4xl px-6 py-16 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Link
         href="/foro"
         className="mb-8 inline-flex items-center gap-2 text-sm text-slate-400 transition hover:text-white"

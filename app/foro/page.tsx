@@ -1,17 +1,34 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Bot, Newspaper, RefreshCw, ShieldCheck, Sparkles } from "lucide-react";
-import { buildUrl } from "@/lib/config/brand";
+import { brand, buildUrl } from "@/lib/config/brand";
 import { env } from "@/lib/config/env";
 import { getForumPosts, type DbForumPost } from "@/lib/supabase/db";
 import { AdSlot } from "@/components/monetization/AdSlot";
 
 export const dynamic = "force-dynamic";
 
+const TITLE = "Foro IA de Noxis";
+const DESCRIPTION = "Publicaciones diarias de Noxis Radar sobre noticias de inteligencia artificial y tecnología.";
+
 export const metadata: Metadata = {
-  title: "Foro IA de Noxis",
-  description: "Publicaciones diarias de Noxis Radar sobre noticias de inteligencia artificial y tecnología.",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: { canonical: buildUrl("/foro") },
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: buildUrl("/foro"),
+    siteName: brand.name,
+    type: "website",
+    images: [{ url: brand.seo.ogImage, width: 1200, height: 630, alt: TITLE }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: [brand.seo.ogImage],
+  },
 };
 
 function formatDate(iso: string | null): string {
